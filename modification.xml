@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	This is an example modification file for SMF packages.
+
+	ATTENTION: If you are trying to install this manually, you should try
+	the package manager.  If it will not work for you, please take a look
+	at the following for information on this format:
+		http://mods.simplemachines.org/docs/manual-install.php
+
+================================================================================
+
+	Modification files can be used to modify files so that they do what
+	your package needs them to do to work properly.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+
+	<id>digger:ExtendPostForm</id>
+	<version>1.0</version>
+
+	<file name="$themedir/Post.template.php">
+		<operation>
+			<search position="replace"><![CDATA[							<option value="" selected="selected">', $txt['change_color'], '</option>
+							<option value="Black">', $txt[262], '</option>
+							<option value="Red">', $txt[263], '</option>
+							<option value="Yellow">', $txt[264], '</option>
+							<option value="Pink">', $txt[265], '</option>
+							<option value="Green">', $txt[266], '</option>
+							<option value="Orange">', $txt[267], '</option>
+							<option value="Purple">', $txt[268], '</option>
+							<option value="Blue">', $txt[269], '</option>
+							<option value="Beige">', $txt[270], '</option>
+							<option value="Brown">', $txt[271], '</option>
+							<option value="Teal">', $txt[272], '</option>
+							<option value="Navy">', $txt[273], '</option>
+							<option value="Maroon">', $txt[274], '</option>
+							<option value="LimeGreen">', $txt[275], '</option>
+						</select>';
+		echo '<br />';]]></search>
+
+			<add><![CDATA[							<option value="" selected="selected">', $txt['change_color'], '</option>
+							<option style="color: Black;" value="Black">', $txt[262], '</option>
+							<option style="color: Red;" value="Red">', $txt[263], '</option>
+							<option style="color: Yellow;" value="Yellow">', $txt[264], '</option>
+							<option style="color: Pink;" value="Pink">', $txt[265], '</option>
+							<option style="color: Green;" value="Green">', $txt[266], '</option>
+							<option style="color: Orange;" value="Orange">', $txt[267], '</option>
+							<option style="color: Purple;" value="Purple">', $txt[268], '</option>
+							<option style="color: Blue;" value="Blue">', $txt[269], '</option>
+							<option style="color: Beige;" value="Beige">', $txt[270], '</option>
+							<option style="color: Brown;" value="Brown">', $txt[271], '</option>
+							<option style="color: Teal;" value="Teal">', $txt[272], '</option>
+							<option style="color: Navy;" value="Navy">', $txt[273], '</option>
+							<option style="color: Maroon;" value="Maroon">', $txt[274], '</option>
+							<option style="color: LimeGreen;" value="LimeGreen">', $txt[275], '</option>
+						</select>';
+
+// Print a drop down list for fonts 
+		if (!isset($context['disabled_tags']['font']))
+			echo ' <select onchange="surroundText(\'[font=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/font]\', document.forms.', $context['post_form'], '.', $context['post_box_name'], '); this.selectedIndex = 0; document.forms.', $context['post_form'], '.', $context['post_box_name'], '.focus(document.forms.', $context['post_form'], '.', $context['post_box_name'], '.caretPos);" style="margin-bottom: 1ex;">
+							<option value="" selected="selected">', $txt[533], '</option>
+              <option style="font-family: Arial;" value="arial">Arial</option>
+              <option style="font-family: Courier New;" value="courier">Courier New</option>
+              <option style="font-family: Times New Roman;" value="times">Times New Roman</option>
+              <option style="font-family: Verdana;" value="verdana">Verdana</option>
+						</select>';
+
+// Print a drop down list for font sizes
+		if (!isset($context['disabled_tags']['color']))
+			echo ' <select onchange="surroundText(\'[size=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/size]\', document.forms.', $context['post_form'], '.', $context['post_box_name'], '); this.selectedIndex = 0; document.forms.', $context['post_form'], '.', $context['post_box_name'], '.focus(document.forms.', $context['post_form'], '.', $context['post_box_name'], '.caretPos);" style="margin-bottom: 1ex;">
+							<option value="" selected="selected">', $txt[532], '</option>
+              <option style="font-size: 8pt;" value="8pt">8pt</option>
+              <option style="font-size: 10pt;" value="10pt">10pt</option>
+              <option style="font-size: 12pt;" value="12pt">12pt</option>
+              <option style="font-size: 14pt;" value="14pt">14pt</option>
+              <option style="font-size: 16pt;" value="16pt">16pt</option>
+              <option style="font-size: 18pt;" value="18pt">18pt</option>
+              <option style="font-size: 20pt;" value="20pt">20pt</option>
+						</select>';
+		echo '<br />';
+		
+		   // Java script to handle input boxes for links...
+    echo '<script language="JavaScript" type="text/javascript">
+    // <!' . '--
+    
+      function linkINPUT(TAG)
+		  {
+		    var LINK, DESC;
+		    var httpLINK = "http://";
+        var ftpLINK = "ftp://";
+        var SELECTED = document.selection.createRange().text;
+	  
+		    if (TAG == "flash") LINK = prompt("Please enter a flash link :", SELECTED ? SELECTED : httpLINK);
+        if (TAG == "img") LINK = prompt("Please enter a image link :", SELECTED ? SELECTED : httpLINK);
+        if (TAG == "email") LINK = prompt("Please enter an email address :", SELECTED);
+        if (TAG == "url") 
+        {
+          LINK = prompt("Please enter a http link :", SELECTED ? SELECTED : httpLINK);
+          DESC = prompt("Please enter a link description :", SELECTED);
+        }
+        if (TAG == "ftp") 
+        {
+          LINK = prompt("Please enter a ftp link :", SELECTED ? SELECTED : ftpLINK);
+          DESC = prompt("Please enter a link description :", SELECTED);
+        }
+        
+        if (DESC == "" || LINK == " ") DESC = LINK  
+        if (LINK == null || LINK == "" || LINK == " " || LINK == "http://" || LINK == "ftp://") {}
+        else if (TAG == "flash" || TAG == "img" || TAG == "email")
+        {  
+          replaceText(\'[\'+TAG+\']\'+LINK+\'\'+\'[/\'+TAG+\']\', document.', $context['post_form'], '.', $context['post_box_name'], ');
+        }
+        else if (TAG == "url" || TAG == "ftp")
+        {  
+          replaceText(\'[\'+TAG+\'=\'+LINK+\']\'+DESC+\'\'+\'[/\'+TAG+\']\', document.', $context['post_form'], '.', $context['post_box_name'], ');
+        }         			
+
+      }
+   // --' . '>
+   </script>';
+
+]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before"><![CDATA[		// Print the buttom row of buttons!
+		foreach ($context['bbc_tags'][1] as $image => $tag)
+		{
+			if (isset($tag['before']))
+			{
+				// Is this tag disabled?
+				if (!empty($context['disabled_tags'][$tag['code']]))
+					continue;
+]]></search>
+
+			<add><![CDATA[     			// Extend BBC buttons
+      if (isset($tag['code']) && (in_array($tag['code'], array('flash','img','url','email','ftp'))))
+      			
+				{
+          			echo '<a href="javascript:void(0);" onclick="linkINPUT(\'', $tag['code'], '\'); return false;"><img onmouseover="bbc_highlight(this, true);" onmouseout="if (window.bbc_highlight) bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" border="0" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
+					continue;
+				}
+]]></add>
+		</operation>		
+		
+	</file>
+	
+
+</modification>
